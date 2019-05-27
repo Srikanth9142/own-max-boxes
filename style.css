@@ -1,0 +1,21 @@
+body{
+    background-color:darkred;
+}
+h1{
+    color: aliceblue;
+}
+.entrance{
+    padding-left: 50px;
+}
+.entrance .art{
+    color: aliceblue;
+    margin: 
+} 
+.art{
+    float: left;
+    padding: 5px;
+    padding-right: 10px;
+}
+.entrance::after{
+    display: table;
+}
