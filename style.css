@@ -9,7 +9,7 @@ h1{
 }
 .entrance .art{
     color: aliceblue;
-    margin: 
+    margin: 0 auto;
 } 
 .art{
     float: left;
@@ -18,4 +18,5 @@ h1{
 }
 .entrance::after{
     display: table;
+    clear: both;
 }
