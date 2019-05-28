@@ -10,13 +10,27 @@ h1{
 .entrance .art{
     color: aliceblue;
     margin: 0 auto;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 } 
+.entrance .art:hover img{
+    -moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+	transform: scale(1.1);
+}
+.article-inst{
+    padding-left: 5px;
+}
 .art{
     float: left;
     padding: 5px;
     padding-right: 10px;
 }
-.entrance::after{
+.entrance:after{
+    /* content: ""; */
     display: table;
     clear: both;
+}
+.groot{
+     /* padding-left: 800px; */
 }
