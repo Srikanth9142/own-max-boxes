@@ -1,13 +1,33 @@
 /* body{
     background-color:darkred;
 } */
+* {
+    box-sizing: border-box;
+}  
+.column{
+    float: left;
+    width: 50%;
+    padding: 5px;
+    padding-left: 10px;
+    height: 130px;
+}
+.row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
 #one{
     color: brown;
-    margin-top: 150px;
 }
 #one{
     color: blueviolet;
 }
 #winner{
     color: darkgreen;
+}
+#score1{
+    color: tomato;
+}
+#score2{
+    color:darkgreen;
 }

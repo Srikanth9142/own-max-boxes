@@ -50,24 +50,30 @@ var c1=0;
 var c2=0;
 function count1(){
     c1+=1;
-    var st = "player1 got "+c1;
+    var st = "Score : "+c1;
     document.getElementById("score1").innerHTML=st;
 }
 function count2(){
     c2+=1;
-    var st = "player2 got "+c2;
+    var st = "Score : "+c2;
     document.getElementById("score2").innerHTML=st;
 
 }
 function checkWinner(){
-    if(c1>c2){
+    if(c1===0 && c2===0){
+        var st = "I can sense that you didn't made a box!! Play the game."
+        document.getElementById("windet").innerHTML=st;
+    }
+    else if(c1>c2){
         // console.log("Player 1 wins");
-        window.alert("Player 1 won");
+        var st = "Player1 wins! Heartly congratulations";
+        document.getElementById("windet").innerHTML = st;
     }
     else if(c2>c1){
-        console.log("Player 2 wins");
+        var st = "Player2 wins! Heartly congratulations";
+        document.getElementById("windet").innerHTML = st;
     }
     else{
-        console.log("Hurray Both won");
+        document.getElementById("windet").innerHTML = "Don\n't fight You both Win the game!";
     }
 }
