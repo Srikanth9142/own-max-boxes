@@ -1,10 +1,12 @@
 var canvas = document.querySelector('canvas');
 var context = canvas.getContext("2d");
+
+//setting width and height of canvas
 canvas.height = (window.innerHeight)/3;
 canvas.width = (window.innerWidth)/3;
 
 var mouseClicked = false,mouseReleased=true;
-
+//adding eventlisteners
 document.addEventListener('click',onmouseClick,false);
 document.addEventListener('mousemove',onmouseReleased,false);
 
@@ -12,22 +14,11 @@ document.addEventListener('mousemove',onmouseReleased,false);
 function onmouseClick(e){
     mouseClicked = !mouseClicked;
 }
+//this function will plot a point at(p,q)
 function point(p,q){
     context.fillRect(p,q,3,3);
 }
-//point(100,150);
-// point(40,40);
-// point(70,40);
-// point(100,40);
-// point(130,40);
-// point(160,40);
-// point(190,40);
-// point(40,70);
-// point(70,70);
-// point(100,70);
-// point(130,70);
-// point(160,70);
-// point(190,70);
+//plotting points
 for(var j=40;j<=250;j+=30){
     for(var i=40;i<=250;i+=30){
         point(i,j);
@@ -65,7 +56,7 @@ function checkWinner(){
         document.getElementById("windet").innerHTML=st;
     }
     else if(c1>c2){
-        // console.log("Player 1 wins");
+        
         var st = "Player1 wins! Heartly congratulations";
         document.getElementById("windet").innerHTML = st;
     }
