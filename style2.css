@@ -1,4 +1,3 @@
-
 * {
     box-sizing: border-box;
 }  
@@ -14,18 +13,9 @@
     display: table;
     clear: both;
 }
-#one{
-    color: brown;
-}
-#one{
-    color: blueviolet;
-}
-#winner{
-    color: darkgreen;
-}
 #score1{
-    color: tomato;
+    color: green;
 }
 #score2{
-    color:darkgreen;
+    color:red;
 }
