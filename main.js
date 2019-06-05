@@ -38,60 +38,54 @@ function storeData(){
             totalLines.push(dict);
         }
     }
-    console.log(totalLines[0]);
+    //console.log(totalLines[0]);
 }
 storeData();
 
 //This function will draw line and swap player turns.
- function drawLine(arr,brr){
+function drawLine(arr,brr){
     context.moveTo(arr[0],arr[1]);
     context.lineTo(brr[0],brr[1]);
-    // if(Math.abs(arr[0]-brr[0])===30 || Math.abs(arr[1]-brr[1])===30){
     var bg = [ [arr[0],arr[1]],[brr[0],brr[1]] ];
     totalLines[0][bg]=1;
     context.stroke();
     bg = [ [brr[0],brr[1]],[arr[0],arr[1]] ];
     totalLines[0][bg]=1;
-    console.log(totalLines[0]);
     if(isLine(arr,brr)===1)
     {
-        isBox();
-        console.log("isline equals to 1")
-        if(turnFlag%2===0){
-            //isBox();
-            if(isBoxFlag){
+         isBox(); //this will sets the flag whether a box made or not
+         console.log(isBoxFlag);
+        if(turnFlag%2===0){ //player1
+            if(isBoxFlag){ //if player1 made a box donot change turn give a bonus turn and donot increment flag
                 document.getElementById("turn1").innerHTML="Your turn";
                 document.getElementById("turn2").innerHTML="Wait for your turn";
-                //isBoxFlag=false;
+                console.log("isboxflag paly1 exed");
+                turnFlag-=1;
             }
-            else{
-            console.log(" player 1isBoxFlag :"+isBoxFlag);
+            else{ //turns swap condition
+            document.getElementById("turn1").innerHTML="wait for your turn";
             document.getElementById("turn2").innerHTML="Your turn";
-            document.getElementById("turn1").innerHTML="wait for your turn";}
-            //isBoxFlag=true;
-        }
-        else{
-            // isBox();
-            if(isBoxFlag){
-                document.getElementById("turn1").innerHTML="Wait for your turn";
-                document.getElementById("turn2").innerHTML="Your turn";
-                //isBoxFlag=false;
             }
-            else{
-            console.log("player 2isBoxFlag :"+isBoxFlag);
+        }
+        else{ //player2
+            if(isBoxFlag){ //if player2 made a box donot change turn give a bonus turn and donot increment flag
+                console.log("isboxflag paly2 exec");
+                document.getElementById("turn2").innerHTML="Your turn"
+                document.getElementById("turn1").innerHTML="Wait for your turn";
+                turnFlag-=1;
+            }
+            else{ //turns swap condition
             document.getElementById("turn1").innerHTML = "Your turn";
             document.getElementById("turn2").innerHTML = "Wait for your turn";}
-            //isBoxFlag=true;
-            //}
         }
-        turnFlag+=1;
+        turnFlag+=1; //flag increment
     }
-    //}
-    else{
+    else{ //wrong positions selected
         document.getElementById("sc").innerHTML="Draw at points";
         arr[0]=brr[0]=arr[1]=brr[1]=0;
     }
 }
+
 
 $("#canvas").click(function(e){
     getPosition(e);
@@ -100,7 +94,7 @@ var arr = new Array(2);
 var brr = new Array(2);
 var flag=-1,i=0;
 var altstr="";
-var turnFlag=2;
+var turnFlag=0;
 //This function will takes coordinate and rounds it.
 function roundCoord(xcor){
     var pg = xcor%10;
@@ -108,7 +102,6 @@ function roundCoord(xcor){
         xcor=xcor-pg;
     else 
         xcor = xcor+(10-pg);
-    console.log("xcor:"+xcor);
     return xcor;
 }
  function getPosition(event){
@@ -118,26 +111,21 @@ function roundCoord(xcor){
        if(clickCheck(roundCoord(event.clientY)))
             arr[1]=roundCoord(event.clientY);
       i++;
-      console.log(i);
-      console.log(arr[0],arr[1]);
-    }
+    }//to draw aline x1,y1,x2,y2 needed those store in arr and brr arrays
       else{
           if(clickCheck(roundCoord(event.clientX)))
             brr[0]=roundCoord(event.clientX);
           if(clickCheck(roundCoord(event.clientY)))
             brr[1]=roundCoord(event.clientY);
           i++;
-          console.log(i);
-          console.log(brr[0],brr[1]);
       }
       flag=flag*(-1);
       //this function will call after 2 calls of getposition function.
       if(i!=0 && i%2===0){
-        console.log("drawing line");
         if((Math.abs(arr[0]-brr[0])===30&&Math.abs(arr[1]-brr[1])===0)||(Math.abs(arr[0]-brr[0])===0&&Math.abs(arr[1]-brr[1])===30)){
         drawLine(arr,brr);
-        isBox(arr,brr);
-        document.getElementById("sc").innerHTML="msg";
+        isBox();
+        document.getElementById("sc").innerHTML="Keep Playing!!";
         }
         else{
             document.getElementById("sc").innerHTML="Draw at given points";
@@ -146,7 +134,7 @@ function roundCoord(xcor){
  }
  
  var cnt1=0,cnt2=0;
- var isBoxFlag=false;
+ var isBoxFlag;
 
 
 function isBox(){
@@ -159,15 +147,14 @@ function isBox(){
                 totalLines[0][[ [i,j],[i+30,j]]]=totalLines[0][[ [i+30,j],[i+30,j+30]]]=totalLines[0][[ [i+30,j+30],[i,j+30]]]=totalLines[0][[ [i,j+30],[i,j]]]=0;
                 isBoxFlag=true;
                 if(document.getElementById("turn1").innerHTML==="Your turn"){
-                    cnt1+=1;
+                    cnt1+=1; //player1 score 
                     context.fillStyle="green";
-                    context.fillRect(i+30,j+30,-30,-30);
-                    console.log("score got : "+cnt1);
+                    context.fillRect(i+30,j+30,-30,-30); //player1 boxes colored 
                 }
                 else{
-                    cnt2+=1;
+                    cnt2+=1; //player2 score
                     context.fillStyle="red";
-                    context.fillRect(i+30,j+30,-30,-30);
+                    context.fillRect(i+30,j+30,-30,-30); //player2 boxes colored.
                 }
 
             }
