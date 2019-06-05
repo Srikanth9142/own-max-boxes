@@ -10,6 +10,11 @@ var totalLines=[];
 var dict={};
 var arrr=[];
 
+var possiClicks=[];//This two lines will makes array with all possible user clicks.
+for(var k=40;k<=250;k+=30){
+    possiClicks.push(k);
+}
+
 context.beginPath();
 function point(p,q){
     context.fillRect(p,q,3,3);
@@ -20,9 +25,7 @@ for(var j=40;j<=250;j+=30){
         point(i,j);
     }
 }
-//context.fillStyle="orange";
-//context.fillText("2",55,55);
-//context.fillRect(70,70,-30,-30);
+
 //this function will store all initial array without lines.
 function storeData(){
     for(var j=40;j<=250;j+=30){
@@ -38,6 +41,7 @@ function storeData(){
     console.log(totalLines[0]);
 }
 storeData();
+
 //This function will draw line and swap player turns.
  function drawLine(arr,brr){
     context.moveTo(arr[0],arr[1]);
@@ -51,22 +55,34 @@ storeData();
     console.log(totalLines[0]);
     if(isLine(arr,brr)===1)
     {
+        isBox();
         console.log("isline equals to 1")
         if(turnFlag%2===0){
-            isBox();
-            if(!isBoxFlag){
+            //isBox();
+            if(isBoxFlag){
+                document.getElementById("turn1").innerHTML="Your turn";
+                document.getElementById("turn2").innerHTML="Wait for your turn";
+                //isBoxFlag=false;
+            }
+            else{
             console.log(" player 1isBoxFlag :"+isBoxFlag);
             document.getElementById("turn2").innerHTML="Your turn";
-            document.getElementById("turn1").innerHTML="wait for your turn";
-            }
+            document.getElementById("turn1").innerHTML="wait for your turn";}
+            //isBoxFlag=true;
         }
         else{
-            isBox();
-            if(!isBoxFlag){
+            // isBox();
+            if(isBoxFlag){
+                document.getElementById("turn1").innerHTML="Wait for your turn";
+                document.getElementById("turn2").innerHTML="Your turn";
+                //isBoxFlag=false;
+            }
+            else{
             console.log("player 2isBoxFlag :"+isBoxFlag);
             document.getElementById("turn1").innerHTML = "Your turn";
-            document.getElementById("turn2").innerHTML = "Wait for your turn";
-            }
+            document.getElementById("turn2").innerHTML = "Wait for your turn";}
+            //isBoxFlag=true;
+            //}
         }
         turnFlag+=1;
     }
@@ -75,7 +91,8 @@ storeData();
         document.getElementById("sc").innerHTML="Draw at points";
         arr[0]=brr[0]=arr[1]=brr[1]=0;
     }
- }
+}
+
 $("#canvas").click(function(e){
     getPosition(e);
 });
@@ -96,15 +113,19 @@ function roundCoord(xcor){
 }
  function getPosition(event){
      if(flag<0){
-      arr[0] = roundCoord(event.clientX);
-      arr[1] = roundCoord(event.clientY);
+      if(clickCheck(roundCoord(event.clientX)))
+          arr[0]=roundCoord(event.clientX);
+       if(clickCheck(roundCoord(event.clientY)))
+            arr[1]=roundCoord(event.clientY);
       i++;
       console.log(i);
       console.log(arr[0],arr[1]);
     }
       else{
-          brr[0] = roundCoord(event.clientX);
-          brr[1] = roundCoord(event.clientY);
+          if(clickCheck(roundCoord(event.clientX)))
+            brr[0]=roundCoord(event.clientX);
+          if(clickCheck(roundCoord(event.clientY)))
+            brr[1]=roundCoord(event.clientY);
           i++;
           console.log(i);
           console.log(brr[0],brr[1]);
@@ -126,37 +147,32 @@ function roundCoord(xcor){
  
  var cnt1=0,cnt2=0;
  var isBoxFlag=false;
-//document.getElementById("sc").innerHTML=st;
+
+
 function isBox(){
     var st="";
     isBoxFlag=false;
     for(var j=40;j<=250;j++){
         for(var i=40;i<=250;i++){
             var cond1 = totalLines[0][[ [i,j],[i+30,j]]]&&totalLines[0][[ [i+30,j],[i+30,j+30]]]&&totalLines[0][[ [i+30,j+30],[i,j+30]]]&&totalLines[0][[ [i,j+30],[i,j]]];
-            //totalLines[0][[ [i,j],[i+30,j]]]=totalLines[0][[ [i+30,j],[i+30,j+30]]]=totalLines[0][[ [i+30,j+30],[i,j+30]]]=totalLines[0][[ [i,j+30],[i,j]]]=0;
             if(cond1){
                 totalLines[0][[ [i,j],[i+30,j]]]=totalLines[0][[ [i+30,j],[i+30,j+30]]]=totalLines[0][[ [i+30,j+30],[i,j+30]]]=totalLines[0][[ [i,j+30],[i,j]]]=0;
+                isBoxFlag=true;
                 if(document.getElementById("turn1").innerHTML==="Your turn"){
                     cnt1+=1;
                     context.fillStyle="green";
                     context.fillRect(i+30,j+30,-30,-30);
-                    isBoxFlag=true;
-                    //st+="player got :"+cnt;
-                    //document.getElementById("sc").innerHTML=st;
                     console.log("score got : "+cnt1);
                 }
                 else{
                     cnt2+=1;
                     context.fillStyle="red";
                     context.fillRect(i+30,j+30,-30,-30);
-                    isBoxFlag=true;
                 }
 
             }
         }
     }
-    //st+="player got :"+cnt;
-    //document.getElementById("sc").innerHTML=st;
      if(document.getElementById("turn1").innerHTML==="Your turn"){
          document.getElementById("score1").innerHTML="score: "+cnt1;
      }
@@ -190,4 +206,14 @@ function isLine(arr,brr){
     else
         return 0;
     
+}
+
+//This function will check the user clicks whether valid or not
+function clickCheck(x){
+    if(possiClicks.includes(x,0)){
+        return true;
+    }
+    else{
+        return false;
+    }
 }

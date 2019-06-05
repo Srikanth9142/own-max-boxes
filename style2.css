@@ -19,3 +19,6 @@
 #score2{
     color:red;
 }
+#turn1{
+    -moz-text-blink: 2;
+}
