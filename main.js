@@ -17,7 +17,7 @@ for(var k=40;k<=250;k+=30){
 
 context.beginPath();
 function point(p,q){
-    context.fillRect(p,q,3,3);
+    context.fillRect(p,q,3.5,3.5);
 }
 //This is for plotting points.
 for(var j=40;j<=250;j+=30){
@@ -26,6 +26,14 @@ for(var j=40;j<=250;j+=30){
     }
 }
 
+context.fillStyle="green";
+context.fillRect(280,40,30,30);
+context.fillStyle="black";
+context.fillText("Player1",320,60);
+context.fillStyle="red";
+context.fillRect(280,100,30,30);
+context.fillStyle="black";
+context.fillText("Player2",320,120);
 //this function will store all initial array without lines.
 function storeData(){
     for(var j=40;j<=250;j+=30){
@@ -42,6 +50,8 @@ function storeData(){
 }
 storeData();
 
+img = document.createElement("img");
+
 //This function will draw line and swap player turns.
 function drawLine(arr,brr){
     context.moveTo(arr[0],arr[1]);
@@ -57,31 +67,50 @@ function drawLine(arr,brr){
          console.log(isBoxFlag);
         if(turnFlag%2===0){ //player1
             if(isBoxFlag){ //if player1 made a box donot change turn give a bonus turn and donot increment flag
-                document.getElementById("turn1").innerHTML="Your turn";
+                document.getElementById("turn1").innerHTML="Bonus!! Your turn";
                 document.getElementById("turn2").innerHTML="Wait for your turn";
+                var sx  = document.getElementById("turnSound");
+                //document.getElementById("smile").src = "images/happy-emoji.gif";
+                
+                sx.play();
+                addHappy();
+                //addSad(2)
                 console.log("isboxflag paly1 exed");
                 turnFlag-=1;
             }
             else{ //turns swap condition
             document.getElementById("turn1").innerHTML="wait for your turn";
             document.getElementById("turn2").innerHTML="Your turn";
+            addPlaying();
+              //
             }
         }
         else{ //player2
             if(isBoxFlag){ //if player2 made a box donot change turn give a bonus turn and donot increment flag
                 console.log("isboxflag paly2 exec");
-                document.getElementById("turn2").innerHTML="Your turn"
+                document.getElementById("turn2").innerHTML="Bonus!! Your turn"
                 document.getElementById("turn1").innerHTML="Wait for your turn";
+                var sx  = document.getElementById("turnSound");
+                //document.getElementById("smile").src = "images/happy-emoji.gif";
+                sx.play();
+                addHappy();
+                //addSad(1);
                 turnFlag-=1;
             }
             else{ //turns swap condition
             document.getElementById("turn1").innerHTML = "Your turn";
-            document.getElementById("turn2").innerHTML = "Wait for your turn";}
+            document.getElementById("turn2").innerHTML = "Wait for your turn";
+            addPlaying();}
         }
         turnFlag+=1; //flag increment
     }
     else{ //wrong positions selected
         document.getElementById("sc").innerHTML="Draw at points";
+        var scObj = document.getElementById("sc");
+        addDoubt();
+        var sy  = document.getElementById("wrongSound");
+        sy.play();
+        //scObj.style.color='red';
         arr[0]=brr[0]=arr[1]=brr[1]=0;
     }
 }
@@ -129,6 +158,9 @@ function roundCoord(xcor){
         }
         else{
             document.getElementById("sc").innerHTML="Draw at given points";
+            addDoubt();
+            var sy  = document.getElementById("wrongSound");
+            sy.play();
         }
    }
  }
@@ -146,7 +178,7 @@ function isBox(){
             if(cond1){
                 totalLines[0][[ [i,j],[i+30,j]]]=totalLines[0][[ [i+30,j],[i+30,j+30]]]=totalLines[0][[ [i+30,j+30],[i,j+30]]]=totalLines[0][[ [i,j+30],[i,j]]]=0;
                 isBoxFlag=true;
-                if(document.getElementById("turn1").innerHTML==="Your turn"){
+                if(document.getElementById("turn1").innerHTML==="Your turn"||document.getElementById("turn1").innerHTML==="Bonus!! Your turn"){
                     cnt1+=1; //player1 score 
                     context.fillStyle="green";
                     context.fillRect(i+30,j+30,-30,-30); //player1 boxes colored 
@@ -166,7 +198,7 @@ function isBox(){
     else{
          document.getElementById("score2").innerHTML="score: "+cnt2;
      }
-     if(cnt1+cnt2===30){
+     if(cnt1+cnt2===35){
          if(cnt1>cnt2){
              altstr="Game Over!! Player 1 win";
              window.alert(altstr);
@@ -203,4 +235,30 @@ function clickCheck(x){
     else{
         return false;
     }
+}
+
+function addHappy(){
+    
+    img.src = "images/happy-emoji.gif";
+    img.id = "smile1";
+    img.setAttribute("height","100");
+    img.setAttribute("width","100");
+    document.getElementById("smile").appendChild(img);
+   
+}
+
+function addPlaying(){
+    img.src = "images/sunglasses_Emoji.png";
+    img.id = "smile1";
+    img.setAttribute("height","100");
+    img.setAttribute("width","100");
+    document.getElementById("smile").appendChild(img);
+}
+
+function addDoubt(){
+    img.src = "images/doubt-emoji.png";
+    img.id = "smile1";
+    img.setAttribute("height","100");
+    img.setAttribute("width","100");
+    document.getElementById("smile").appendChild(img);
 }

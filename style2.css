@@ -22,3 +22,13 @@
 #turn1{
     -moz-text-blink: 2;
 }
+body{
+    background-image: url("images/star-bg.gif");
+}
+#column{
+    z-index: 2;
+}
+#smile{
+    margin-left: 1000px;
+    margin-top: -300px;
+}

@@ -9,9 +9,9 @@
     <title>canvas</title>
     <style type="text/css">
      canvas{
-         
+         /* border: solid 1px; */
          cursor: url("http://downloads.totallyfreecursors.com/cursor_files/pen.cur"), url("http://downloads.totallyfreecursors.com/thumbnails/pen.gif"), auto;
-
+         background-color: #fff;
      }
     </style>
     
@@ -21,22 +21,32 @@
     <canvas id="canvas" ></canvas>
     <script src="main.js"></script>
     <p>hello</p>
-    <div id="sc">msg</div>
+    <div id="sc">Start the game</div>
     <!-- 	 -->
+    <audio id="turnSound">
+        <source src="sounds/score_media.ogg" type="audio/ogg">
+        <source src="sounds/score_media.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrongSound">
+            <source src="sounds/oh_no.ogg" type="audio/ogg">
+            <source src="sounds/oh_no.mp3" type="audio/mpeg">
+    </audio>
     <div class="row">
 		<div class="column" style="background-color: #bbb;">
             <h4>Player 1</h4>
             <p id="turn1">Your Turn</p>
+            <span id="foo1"></span>
 			<p id="score1">Score: 0</p>
 		</div>
 		<div class="column" style="background-color:#aaa;">
             <h4>Player 2</h4>
             <p id="turn2">Wait for your turn</p>
+            <span id="foo2"></span>
             <p id="score2">Score: 0</p>
-            
 		</div>
-	</div>
-	<img src="images/guitar.gif" height="200px" width="200px">
+    </div>
+    <div id = "smile"></div>
+	<img src="images/guitar2.gif" height="220px" width="200px">
 	
 </body>
 </html>
