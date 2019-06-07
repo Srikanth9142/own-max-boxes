@@ -25,7 +25,7 @@ for(var j=40;j<=250;j+=30){
         point(i,j);
     }
 }
-
+//context.lineWidth=3;
 context.fillStyle="green";
 context.fillRect(280,40,30,30);
 context.fillStyle="black";
@@ -131,21 +131,25 @@ function roundCoord(xcor){
         xcor=xcor-pg;
     else 
         xcor = xcor+(10-pg);
+    console.log("xcor :"+xcor);
     return xcor;
+    
 }
  function getPosition(event){
+     var xclient = roundCoord(event.clientX);
+     var yclient = roundCoord(event.clientY);
      if(flag<0){
-      if(clickCheck(roundCoord(event.clientX)))
-          arr[0]=roundCoord(event.clientX);
-       if(clickCheck(roundCoord(event.clientY)))
-            arr[1]=roundCoord(event.clientY);
+      if(clickCheck(xclient))
+          arr[0]=xclient;
+       if(clickCheck(yclient))
+            arr[1]=yclient;
       i++;
     }//to draw aline x1,y1,x2,y2 needed those store in arr and brr arrays
       else{
-          if(clickCheck(roundCoord(event.clientX)))
-            brr[0]=roundCoord(event.clientX);
-          if(clickCheck(roundCoord(event.clientY)))
-            brr[1]=roundCoord(event.clientY);
+          if(clickCheck(xclient))
+            brr[0]=xclient;
+          if(clickCheck(yclient))
+            brr[1]=yclient;
           i++;
       }
       flag=flag*(-1);
